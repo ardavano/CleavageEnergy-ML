@@ -1,45 +1,75 @@
 # Cleavage Energy Prediction with MLIPs
 
-This repository focuses on **benchmarking Machine Learning Interatomic Potentials (MLIPs)** for predicting cleavage energy using a **DFT-calculated dataset**. The project explores **fine-tuning** and **transfer learning** techniques to adapt pre-trained ML models for this specific task.
-
-By embedding **physics principles** directly into the model's training process, such as ensuring symmetry invariance, energy extensivity, and surface area scaling, this work demonstrates how **scientific principles can enhance ML accuracy and interpretability**.
+This repository benchmarks **Machine Learning Interatomic Potentials (MLIPs)** for predicting cleavage energy using a **high-fidelity DFT-calculated dataset**. The project explores advanced **equivariant neural networks**, specifically the **MACE model**, leveraging physics principles such as symmetry preservation, rotational equivariance, and translational invariance. These methods enable accurate and efficient predictions of cleavage energy, critical for high-throughput materials discovery.
 
 ---
 
 ## Project Overview
 
 ### Objectives
-- Benchmark MLIPs for cleavage energy prediction.
-- Fine-tune and transfer pre-trained models for accurate results.
-- Embed physics principles like rotational invariance and extensivity into ML training.
-- Analyze model performance, outlier detection, and generalization.
+- Benchmark state-of-the-art MLIP models for cleavage energy prediction.
+- Demonstrate the benefits of embedding physics principles like equivariance and symmetry preservation into ML models.
+- Analyze performance metrics (MAE, MAPE, R²), outlier distributions, and computational efficiency.
 
 ### Key Topics
-- **Benchmarking MLIPs**: Compare predictive performance of MLIP models.
-- **DFT Dataset**: Utilize a dataset of cleavage energies derived from Density Functional Theory.
-- **Fine-tuning and Transfer Learning**: Adapt ML models for the specific cleavage energy prediction task.
+- **Physics-Informed ML:** Integration of point group symmetries, SO(3) symmetry, and translational invariance of MACE model.
+- **Benchmarking MLIPs:** Compare advanced ML architectures, including MACE, GemNet, and EquiformerV2.
 - **Physics-embedded Training**: Ensure physical principles guide ML predictions.
 - **Scientific Insights**: Demonstrate how physics principles improve ML generalization and accuracy.
+- **DFT Dataset**: Utilize a dataset of cleavage energies derived from Density Functional Theory.
+- **Dataset Integration:** High-throughput DFT data for bulk and slab structures with detailed geometric and energetic properties.
+- **Comprehensive Analysis:** Explore outlier fractions, parity plots, periodic table error visualization, and computational costs.
+
 
 ---
 
 ## Dataset
-The dataset contains:
-- Structural information (bulk and slab configurations).
-- DFT-calculated cleavage energies.
-- Additional features like surface area and Miller indices.
+The dataset used is derived from high-throughput **Density Functional Theory (DFT)** calculations, ensuring high fidelity. Key details include:
+- **Size:** 36,332 slab configurations derived from 3,716 bulk materials.
+- **Features:**
+  - **Energetic Properties:** Bulk and slab energies, cleavage energy.
+  - **Geometric Properties:** Miller indices, slab thickness, and symmetry information.
+  - **Atomic Properties:** Material Project IDs (MPIDs), atomic positions, and lattice vectors.
+- **DFT Setup:** PBE functional, ultra-soft pseudopotentials, optimized k-point grids, and energy cutoffs ensuring precise calculations.
 
 ---
 
-## Methodology
-1. **Model Selection**: Start with pre-trained MLIPs (e.g., GemNet-OC, MACE).
-2. **Fine-tuning**: Adjust weights using the cleavage energy dataset.
-3. **Physics Embedding**:
-   - Ensure rotational and translational invariance.
-   - Include surface area and energy extensivity.
-4. **Evaluation**:
-   - Benchmark models using MAE, MAPE, and parity plots.
-   - Analyze outliers and model generalization.
+## **Methodology**
+
+### **1. DFT Calculations**
+- Developed using Schrödinger equation reformulation for energy minimization.
+- Cleavage energy is computed using:
+  \[
+  E_{\text{cleavage}} = \frac{E_{\text{slab}} - n \cdot E_{\text{bulk}}}{2A}
+  \]
+  Where \(E_{\text{slab}}\) and \(E_{\text{bulk}}\) are the total energies of the slab and bulk, \(A\) is the surface area, and \(n\) is the bulk layer count.
+
+### **2. MLIP Architectures**
+- **MACE:** Equivariant neural network preserving physical symmetries.
+  - SO(3) symmetry for rotational invariance.
+  - Tensor-based representations capturing higher-order interactions.
+- **GemNet and EquiformerV2:** Graph-based ML models with atomic embeddings and symmetry-preserving operations.
+- **Symmetry Advantages:** Models achieve generalization across diverse structures.
+
+### **3. Evaluation Metrics**
+- **Mean Absolute Error (MAE):** Measures average prediction error.
+- **Mean Absolute Percentage Error (MAPE):** Highlights relative accuracy.
+- **R² Score:** Evaluates variance captured by the model.
+
+### **4. Visualizations**
+- **Parity Plots:** Compare DFT vs. predicted cleavage energies.
+- **Error Heatmaps:** Periodic table distribution of MAPE across elements.
+- **Outlier Fractions:** Percentage of extreme errors for each model.
+
+---
+
+## **Computational Code**
+
+### **Scripts**
+The project includes detailed Python scripts for preprocessing, training, and evaluating models, as well as visualizing results. Key files include:
+- **Main Script (Prediction Cleavage Energy using MLPs):** A Python script to calculate and benchmark MLIP performance.
+- **Visualization Notebook:** `Ardavan_project.ipynb` for generating parity plots, error maps, and other analyses.
+
 
 ---
 
@@ -47,31 +77,6 @@ The dataset contains:
 - Improved cleavage energy predictions with embedded physics.
 - Identification of outliers and their impact on model performance.
 - Benchmark results for MLIP models.
-
----
-
-## How to Use
-
-### 1. Clone the Repository
-```bash
-git clone https://github.com/your-repo-name.git
-cd your-repo-name
-```
-
-### 2. Install Dependencies
-```bash
-pip install -r requirements.txt
-```
-
-### 3. Run Fine-tuning
-```bash
-python main.py --config config.yml --mode train
-```
-
-### 4. Evaluate Results
-```bash
-python main.py --config config.yml --mode evaluate
-```
 
 ---
 
@@ -83,10 +88,22 @@ python main.py --config config.yml --mode evaluate
 ---
 
 ## Contributors
-- **Your Name**
+- **Ardavan Mehdizadeh**
+- **Jawad Ahmed**
+
+---
+
+### **Repository Structure**
+```plaintext
+├── data/                     # Input datasets (DFT-calculated values)
+├── scripts/                  # Preprocessing, training, and evaluation scripts
+├── notebooks/                # Jupyter notebooks for visualization
+├── models/                   # Pre-trained model weights (e.g., MACE, GemNet)
+├── results/                  # Output files: metrics, charts, and logs
+└── README.md                 # Repository overview
+```
 
 ---
 
 ## References
 1. Schindler, P., et al., "Discovery of Stable Surfaces with Extreme Work Functions," *Adv. Funct. Mater.*, 2024. DOI: [10.1002/adfm.202401764](https://doi.org/10.1002/adfm.202401764).
-2. Open Catalyst Project Datasets (OC20, OC22).
