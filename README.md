@@ -96,8 +96,8 @@ The project includes detailed Python scripts for preprocessing, training, and ev
 ### **Repository Structure**
 ```plaintext
 ├── data/                     # Input datasets (DFT-calculated values)
-├── scripts/                  # Preprocessing, training, and evaluation scripts
-├── notebooks/                # Jupyter notebooks for visualization
+├── scripts/                  # Preprocessing and evaluation scripts
+├── notebooks/                # Jupyter notebooks for visualization and plotting
 ├── models/                   # Pre-trained model weights (e.g., MACE, GemNet)
 ├── results/                  # Output files: metrics, charts, and logs
 └── README.md                 # Repository overview
